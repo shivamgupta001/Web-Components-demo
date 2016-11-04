@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Custom Elements n Shadow DOM</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		// namespace
+		var mytags = {};	
+
+		// x-foo custom tag
+		// registerElement teaches browser about new custom element
+		// and attaches constructor , if no namespace then attached globally
+		// only accepted tags are with '-'   . Invalid elements 'xfoo' & 'x_foo'
+		
+		
+
+
+
+		// creating prototype to extend
+		var proto = Object.create(HTMLElement.prototype);
+		
+		// lifecycle callbacks all are optional
+		proto.createdCallback = function(){
+
+			// created shadow root
+			var shadow = this.createShadowRoot();
+			shadow.innerHTML = '<b style="color:red">Now I am in shadow root</b>';
+			
+		}
+		proto.attachedCallback = function(){
+			
+		}
+		mytags.XFoo = document.registerElement('x-foo',{
+			prototype : proto
+		});
+		//ways of instantiating
+		var xfoo1 = document.createElement('x-foo');
+		xfoo1.addEventListener('click', function(e){
+				console.log(e);
+		});
+		document.body.appendChild(xfoo1);
+		document.body.appendChild(new mytags.XFoo());
+
+
+
+		
+
+
+
+
+
+
+		//mega-button custom tag extending native element button
+		mytags.MegaBtn = document.registerElement('mega-button',{
+			prototype : Object.create(HTMLButtonElement),
+			extends : 'button'
+		});
+		var megaBtn = document.createElement('button','mega-button');
+		document.body.appendChild(megaBtn);
+		document.body.appendChild(new mytags.MegaBtn());
+
+		// extending a custom element   [NOT WORKING]
+		/*mytags.XFooExtended = document.registerElement('x-foo-extended',{
+			prototype : Object.create(HTMLElement.prototype),
+			extends : 'x-foo'
+		});
+		document.body.appendChild(new XFooExtended());*/
+
+
+	</script>
+</body>
+</html>

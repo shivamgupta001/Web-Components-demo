@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Web Components</title>
+	
+</head>
+<body>
+	
+	<!-- template is inert tag -->
+	<!-- template element allows you to declare fragments of DOM which are parsed, inert at page load , and instantiated later at runtime -->
+	<!-- ideal placeholder for custom elements -->
+	<template id="mytemplate">
+		<!-- inner content is document fragment -->
+		<img src="" alt="great image">
+	  	<div class="comment"></div>
+	</template>
+
+	<script type="text/javascript">
+		var t = document.querySelector('#mytemplate');
+		t.content.querySelector('img').src = "Caution.png";
+		
+		var clone = document.importNode(t.content, true);
+		document.body.appendChild(clone);
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML Templates</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+
+	<!-- new tags can be given , later register it No Problem -->
+	<x-p-temp></x-p-temp>
+	<video></video>
+	<!-- template is inert tag -->
+	<!-- template element allows you to declare fragments of DOM which are parsed, inert at page load , and instantiated later at runtime -->
+	<!-- ideal placeholder for custom elements -->
+	<template id="sdtemplate">
+		<style type="text/css">
+			p{
+				color : greenyellow;
+			}
+		</style>
+		<p>HTML Template , shadow DOM</p>
+	</template>
+	<script type="text/javascript">
+		var proto = Object.create(HTMLElement.prototype,{
+			createdCallback : {
+				value : function(){
+					var t = document.querySelector('#sdtemplate');
+					var clone = document.importNode(t.content , true);
+					this.createShadowRoot().appendChild(clone);
+				}
+			}
+		});
+		document.registerElement('x-p-temp',{
+			prototype : proto
+		});
+	</script>
+</body>
+</html>
